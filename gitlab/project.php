@@ -62,7 +62,7 @@ class Project extends Request
 
     public function delete_hook($array = array())
     {
-        return $this->delete("/projects/{$array['id']}/hooks/{$array['hook_id']}");
+        return $this->delete("/projects/{$array['id']}/hooks", $array);
     }
 }
 
