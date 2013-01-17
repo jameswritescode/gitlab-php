@@ -6,13 +6,11 @@ function __autoload($class) {
 
 class GitLab
 {
-    private $token;
-    private $domain;
+    public $project;
 
     public function __construct($domain, $token)
     {
-        $this->token = $token;
-        $this->domain = $domain;
+        $this->project = new Project($domain, $token);
     }
 }
 
