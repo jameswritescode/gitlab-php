@@ -51,19 +51,19 @@ class Request
     }
 
     protected function get($endpoint, $params = array()) {
-        return $this->request($endpoint, $params, 'GET');
+        return json_decode($this->request($endpoint, $params, 'GET'));
     }
 
     protected function post($endpoint, $params = array()) {
-        return $this->request($endpoint, $params, 'POST');
+        return json_decode($this->request($endpoint, $params, 'POST'));
     }
 
     protected function patch($endpoint, $params = array()) {
-        return $this->request($endpoint, $params, 'PUT');
+        return json_decode($this->request($endpoint, $params, 'PUT'));
     }
 
     protected function delete($endpoint) {
-        return $this->request($endpoint, '', 'DELETE');
+        return json_decode($this->request($endpoint, '', 'DELETE'));
     }
 }
 
