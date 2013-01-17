@@ -52,7 +52,7 @@ class Project extends Request
 
     public function create_hook($array = array())
     {
-        return $this->get("/projects/{$array['id']}/hooks", $array);
+        return $this->post("/projects/{$array['id']}/hooks", $array);
     }
 
     public function update_hook($array = array())
