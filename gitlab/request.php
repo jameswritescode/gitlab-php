@@ -48,6 +48,7 @@ class Request
             curl_setopt($curl, CURLOPT_POSTFIELDS, $params);
         } elseif ($method == 'DELETE') {
             curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'DELETE');
+            curl_setopt($curl, CURLOPT_POSTFIELDS, $params);
         }
 
         $response = curl_exec($curl);
@@ -84,9 +85,9 @@ class Request
         return $this->merge($response, $this->result);
     }
 
-    protected function delete($endpoint)
+    protected function delete($endpoint, $params = array())
     {
-        $response = json_decode($this->request($endpoint, '', 'DELETE'));
+        $response = json_decode($this->request($endpoint, $params, 'DELETE'));
 
         return $this->merge($response, $this->result);
     }
