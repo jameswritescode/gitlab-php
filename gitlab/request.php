@@ -18,11 +18,14 @@ class Request
         return (object) array_merge((array) $first, (array) $second);
     }
 
-    private function url($endpoint, $params)
+    private function url($endpoint, $params, $method)
     {
         $params['private_token'] = $this->token;
 
-        $query = '?' . http_build_query($params);
+        if (!in_array($method, ['POST', 'PUT', 'DELETE']))
+            $query = '?' . http_build_query($params);
+        else
+            $query = "?private_token=$this->token";
 
         return "$this->domain$endpoint$query";
     }
@@ -31,15 +34,14 @@ class Request
     {
         $curl = curl_init();
 
-        curl_setopt($curl, CURLOPT_URL, $this->url($endpoint, $params));
+        curl_setopt($curl, CURLOPT_URL, $this->url($endpoint, $params, $method));
         curl_setopt($curl, CURLOPT_HTTPHEADER, array(
             'Accept: application/json',
-            'Content-Type: application/json'
         ));
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
 
         if ($method == 'POST') {
-            curl_setopt($curl, CURLOPT_POST, TRUE);
+            curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'POST');
             curl_setopt($curl, CURLOPT_POSTFIELDS, $params);
         } elseif ($method == 'PUT') {
             curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'PUT');
@@ -82,7 +84,7 @@ class Request
         return $this->merge($response, $this->result);
     }
 
-    protected function delete($endpoint) 
+    protected function delete($endpoint)
     {
         $response = json_decode($this->request($endpoint, '', 'DELETE'));
 
