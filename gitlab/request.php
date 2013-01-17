@@ -37,7 +37,6 @@ class Request
             'Content-Type: application/json'
         ));
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
 
         if ($method == 'POST') {
             curl_setopt($curl, CURLOPT_POST, TRUE);
