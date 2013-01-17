@@ -5,11 +5,17 @@ class Request
     private $curl;
     private $domain;
     private $token;
+    private $result = array();
 
     public function __construct($domain, $token)
     {
         $this->domain = $domain;
         $this->token = $token;
+    }
+
+    private function merge($first, $second)
+    {
+        return (object) array_merge((array) $first, (array) $second);
     }
 
     private function url($endpoint, $params)
@@ -45,25 +51,43 @@ class Request
 
         $response = curl_exec($curl);
 
+        $this->result = array(
+            'response' => array(
+                'code' => curl_getinfo($curl, CURLINFO_HTTP_CODE)
+            )
+        );
+
         curl_close($curl);
 
         return $response;
     }
 
-    protected function get($endpoint, $params = array()) {
-        return json_decode($this->request($endpoint, $params, 'GET'));
+    protected function get($endpoint, $params = array())
+    {
+        $response = json_decode($this->request($endpoint, $params, 'GET'));
+
+        return $this->merge($response, $this->result);
     }
 
-    protected function post($endpoint, $params = array()) {
-        return json_decode($this->request($endpoint, $params, 'POST'));
+    protected function post($endpoint, $params = array())
+    {
+        $response = json_decode($this->request($endpoint, $params, 'POST'));
+
+        return $this->merge($response, $this->result);
     }
 
-    protected function patch($endpoint, $params = array()) {
-        return json_decode($this->request($endpoint, $params, 'PUT'));
+    protected function patch($endpoint, $params = array())
+    {
+        $response = json_decode($this->request($endpoint, $params, 'PUT'));
+
+        return $this->merge($response, $this->result);
     }
 
-    protected function delete($endpoint) {
-        return json_decode($this->request($endpoint, '', 'DELETE'));
+    protected function delete($endpoint) 
+    {
+        $response = json_decode($this->request($endpoint, '', 'DELETE'));
+
+        return $this->merge($response, $this->result);
     }
 }
 
