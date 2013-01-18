@@ -1,5 +1,7 @@
 <?php
 
+namespace GitLab;
+
 class Request
 {
     private $curl;

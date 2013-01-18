@@ -1,5 +1,7 @@
 <?php
 
+namespace GitLab;
+
 class Project extends Request
 {
     public function all() {
@@ -66,5 +68,3 @@ class Project extends Request
     }
 }
 
-
-class ProjectError extends Exception {}
