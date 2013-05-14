@@ -4,11 +4,13 @@ namespace GitLab;
 
 class Project extends Request
 {
-    public function all() {
+    public function all()
+    {
         return $this->get('/projects');
     }
 
-    public function find($id) {
+    public function find($id)
+    {
         return $this->get("/projects/$id");
     }
 
