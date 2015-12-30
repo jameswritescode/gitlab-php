@@ -1,8 +1,6 @@
 ## GitLab PHP Wrapper
 
-This project is in development - feel free to contribute if you find this.
-
-This project uses [git-flow](https://github.com/nvie/gitflow) for development.
+This project is not maintained and not finished.
 
 ### Usage
 
